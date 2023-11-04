@@ -7,6 +7,23 @@
 ###########PASO I: INTALACION Y ACTIVACION DE PAQUETES NECESARIOS############################
 #############################################################################################
 install.packages ("rgbif")
+install.packages ("TeachingDemos")
+install.packages ("dismo")
+install.packages ("biomod2")
+install.packages ("sp")
+install.packages ("raster")
+install.packages ("rgeos")
+install.packages ("maptools")
+install.packages ("rgdal")
+install.packages ("usdm")
+install.packages ("ENMeval")
+install.packages ("foreign")
+install.packages ("spocc")
+install.packages ("corrplot")
+install.packages ("XML")
+install.packages ("dplyr")
+install.packages ("reshape")
+install.packages ("CoordinateCleaner")
 
 library(rgbif)
 library(TeachingDemos)
@@ -22,9 +39,7 @@ library(ENMeval)
 library(foreign)
 library(spocc)
 library(corrplot)
-library(usdm)
 library(XML)
-library(ecospat)
 library(dplyr)
 library(reshape)
 library(CoordinateCleaner)
@@ -158,7 +173,7 @@ datos_2000<-data.frame(species,lon,lat) ## crear el archivo con solo esas tres v
 points_occ2000 <- SpatialPointsDataFrame(datos_2000[,2:3],datos_2000)#convertir a un archivo shp de puntos 1970-2000
 
 #2. extraemos los valores ambientales para esas localidad 
-presencias_clima <- data.frame(extract(capas_presente,points_occ2000[,2:3]))###extrae los valores climaticos para cada uno de los puntos de presencia
+presencias_clima <- data.frame(raster::extract(capas_presente,points_occ2000[,2:3]))###extrae los valores climaticos para cada uno de los puntos de presencia
 presencias_clima2<-data.frame(points_occ2000,presencias_clima)##crear una tabla de datos con los valores climaticos para mis registros del 1970-2000
 presencias_clima3 <- na.omit(presencias_clima2)## omite mis datos de presencia sin valores ambientales.
 
@@ -189,7 +204,7 @@ points_occ2020 <- SpatialPointsDataFrame(datos_2020[,2:3],datos_2020)#convertir 
 
 
 ##extraemos los valores ambientales para esas localidad y omitimos los datos sin informacion
-presencias2020_clima <- data.frame(extract(capas_presente,points_occ2020[,2:3]))###extrae los valores climaticos para cada uno de los puntos de presencia "seleccionados" de 2001 al presente
+presencias2020_clima <- data.frame(raster::extract(capas_presente,points_occ2020[,2:3]))###extrae los valores climaticos para cada uno de los puntos de presencia "seleccionados" de 2001 al presente
 presencias2020_clima2<-data.frame(points_occ2020,presencias2020_clima)##crear una tabla de datos con los valores climaticos para mis registros "seleccionados" de 2001 al presente
 presencias2020_clima3 <- na.omit(presencias2020_clima2)## omite mis datos de presencia sin valores ambientales
 
